@@ -1,0 +1,23 @@
+# Components
+
+In Livebook's setup cell add `smart_cells_by_sdball`
+
+```elixir
+Mix.install([
+  {:smart_cells_by_sdball, "~> 0.1.0"}
+])
+```
+
+## Usage
+
+In your Elixir Livebook's setup cell either search for
+`smart_cells_by_sdball` or add the above `Mix.install` code.
+
+After you've Adding the dependency to your Livebook you will have a new set of registered smart cells to choose from: hooray!
+
+Click "+ Smart" and then select any of the cells you like and add them to your Livebook!
+
+## Current list of smart cells
+
+* xkcd — xkcd comics right in your Livebook
+
