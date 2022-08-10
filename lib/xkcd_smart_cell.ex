@@ -59,6 +59,7 @@ defmodule XkcdSmartCell do
           <img style="margin: 0" src="#{comic.img}" title="#{String.replace(comic.alt, "\"", "&quot;")}" alt="#{comic.title}">
 
           <p><a href="https://xkcd.com/#{comic.num}"><span style="opacity: 0.8">xkcd comic #{comic.num}</span></a></p>
+          <p style="opacity: 0.8">alt: #{comic.alt}</p>
           </div>
           """)
 
