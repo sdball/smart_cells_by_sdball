@@ -36,41 +36,48 @@ defmodule XkcdSmartCell do
 
   @impl true
   def to_source(%{"action" => "latest"}) do
-    do_xkcd(&Xkcd.latest/0)
+    quote do
+      Xkcd.latest()
+      |> XkcdSmartCell.render_markdown()
+    end |> Kino.SmartCell.quoted_to_string()
   end
 
   def to_source(%{"action" => "random"}) do
-    do_xkcd(&Xkcd.random/0)
+    quote do
+      Xkcd.random()
+      |> XkcdSmartCell.render_markdown()
+    end |> Kino.SmartCell.quoted_to_string()
   end
 
   def to_source(%{"number" => number}) do
-    do_xkcd(fn -> Xkcd.number(number) end)
+    quote do
+      Xkcd.number(unquote(number))
+      |> XkcdSmartCell.render_markdown()
+    end |> Kino.SmartCell.quoted_to_string()
   end
 
-  def do_xkcd(xkcd) do
-    quote do
-      case unquote(xkcd.()) do
-        {:ok, comic} ->
-          Kino.Markdown.new("""
-          <div class="xkcd-output" style="background-color: beige; padding: 40px; border: 1px dotted grey;">
+  def render_markdown(xkcd) do
+    case xkcd do
+      {:ok, comic} ->
+        Kino.Markdown.new("""
+        <div class="xkcd-output" style="background-color: beige; padding: 40px; border: 1px dotted grey;">
 
-          # #{comic.title}
+        # #{comic.title}
 
-          <img style="margin: 0" src="#{comic.img}" title="#{String.replace(comic.alt, "\"", "&quot;")}" alt="#{comic.title}">
+        <img style="margin: 0" src="#{comic.img}" title="#{String.replace(comic.alt, "\"", "&quot;")}" alt="#{comic.title}">
 
-          <p><a href="https://xkcd.com/#{comic.num}"><span style="opacity: 0.8">xkcd comic #{comic.num}</span></a></p>
-          <p style="opacity: 0.8">alt: #{comic.alt}</p>
-          </div>
-          """)
+        <p><a href="https://xkcd.com/#{comic.num}"><span style="opacity: 0.8">xkcd comic #{comic.num}</span></a></p>
+        <p style="opacity: 0.8">alt: #{comic.alt}</p>
+        </div>
+        """)
 
-        {:error, reason} ->
-          Kino.Markdown.new("""
-          # Error
+      {:error, reason} ->
+        Kino.Markdown.new("""
+        # Error
 
-          #{reason}
-          """)
-      end
-    end |> Kino.SmartCell.quoted_to_string()
+        #{reason}
+        """)
+    end
   end
 
   @impl true

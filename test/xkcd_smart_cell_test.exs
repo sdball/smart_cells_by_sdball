@@ -7,11 +7,11 @@ defmodule ExDuckSmartCellTest do
 
   test "initial source uses the defaults" do
     {_kino, source} = start_smart_cell!(XkcdSmartCell, %{})
-    assert source
+    assert source == "Xkcd.number(nil) |> XkcdSmartCell.render_markdown()"
   end
 
   test "comic by number" do
     {_kino, source} = start_smart_cell!(XkcdSmartCell, %{"number" => 1270})
-    assert String.contains?(source, "num: 1270")
+    assert source == "Xkcd.number(1270) |> XkcdSmartCell.render_markdown()"
   end
 end
