@@ -30,6 +30,7 @@ defmodule SdballSmartcells.MixProject do
     [
       {:xkcd, "~> 0.0.3"},
       {:kino, "~> 0.6.1"},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
     ]
   end
 
