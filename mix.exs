@@ -2,7 +2,7 @@ defmodule SdballSmartcells.MixProject do
   use Mix.Project
 
   @github "https://github.com/sdball/smart_cells_by_sdball"
-  @version "0.0.1"
+  @version "0.0.2"
 
   def project do
     [
